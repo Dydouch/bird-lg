@@ -25,7 +25,7 @@ import logging
 from logging.handlers import TimedRotatingFileHandler
 from logging import FileHandler
 import subprocess
-from urllib import unquote
+from urllib.parse import unquote
 
 from bird import BirdSocket
 
@@ -65,15 +65,15 @@ def traceroute():
         traceroute6 = [ 'traceroute', '-6' ]
 
     src = []
-    if request.path == '/traceroute6': 
-	traceroute = traceroute6
-	if app.config.get("IPV6_SOURCE",""):
-	     src = [ "-s",  app.config.get("IPV6_SOURCE") ]
+    if request.path == '/traceroute6':
+        traceroute = traceroute6
+        if app.config.get("IPV6_SOURCE",""):
+             src = [ "-s",  app.config.get("IPV6_SOURCE") ]
 
     else: 
-	traceroute = traceroute4
-	if app.config.get("IPV4_SOURCE",""):
-	     src = [ "-s",  app.config.get("IPV4_SOURCE") ]
+        traceroute = traceroute4
+        if app.config.get("IPV4_SOURCE",""):
+             src = [ "-s",  app.config.get("IPV4_SOURCE") ]
 
     query = request.args.get("q","")
     query = unquote(query)
